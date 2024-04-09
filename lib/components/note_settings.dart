@@ -22,6 +22,7 @@ class NoteSettings extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Geneva' 
               
               ),),
             ),

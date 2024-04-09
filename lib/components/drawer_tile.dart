@@ -12,9 +12,10 @@ class DrawerTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 25.0),
       child: ListTile(
         title: Text(title,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.inversePrimary,
-        ),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            fontFamily: 'Geneva'
+          ),
         ),
         leading: leading,
         onTap: onTap,

@@ -27,8 +27,9 @@ class SettingsPage extends StatelessWidget {
             Text(
               "Dark Mode",
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.inversePrimary),
+                fontFamily: 'Geneva',
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.inversePrimary),
             ),
             CupertinoSwitch(
                 value: Provider.of<ThemeProvider>(context, listen: false)

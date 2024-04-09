@@ -39,7 +39,7 @@ class _NotesPageState extends State<NotesPage> {
                     textController.clear();
                     Navigator.pop(context);
                   },
-                  child: const Text("Create"),
+                  child: const Text("Create", style: TextStyle( fontFamily: 'Geneva' )),
                 )
               ],
             ));

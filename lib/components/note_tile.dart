@@ -31,12 +31,13 @@ class NoteTile extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(8)),
-                      child: Text(text),
+                      child: Text(text, style: const TextStyle( fontFamily: 'Geneva' )),
                     )),
             child: Text(
               text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              style: const TextStyle( fontFamily: 'Geneva' )
             )),
         trailing: Builder(builder: (context) {
           return IconButton(
