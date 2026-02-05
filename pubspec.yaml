@@ -1,0 +1,26 @@
+name: flutter_modern_template
+description: "🚀 Android-focused Flutter template with Material 3, rich Dart code, and modern architecture"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+# Platform-specific configuration
+platforms:
+  android:
+    default_package: flutter_modern_template
