@@ -1,76 +1,43 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'screens/profile_screen.dart';
-import 'screens/settings_screen.dart';
-import 'theme/app_theme.dart';
+import 'package:flutter_starter_kit/app/const/app_constant.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const ModernTemplateApp());
+import 'app/config/size_config.dart';
+import 'app/enum/enum.dart';
+import 'app/providers/app_providers.dart';
+import 'app/routes/app_routes.dart';
+import 'core/notifiers/theme/theme_notifiers.dart';
+import 'init.dart';
+
+void main() async {
+  await init();
+  runApp(const MyApp());
 }
 
-class ModernTemplateApp extends StatelessWidget {
-  const ModernTemplateApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Modern Template',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const MainNavigator(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class MainNavigator extends StatefulWidget {
-  const MainNavigator({super.key});
-
-  @override
-  State<MainNavigator> createState() => _MainNavigatorState();
-}
-
-class _MainNavigatorState extends State<MainNavigator> {
-  int _currentIndex = 0;
-  
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const ProfileScreen(),
-    const SettingsScreen(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+    SizeConfig().init(context);
+    return MultiProvider(
+      providers: AppProvider.providers,
+      child: Consumer<ThemeNotifier>(
+        builder: (context, themeNotifier, child) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: AppConstant.appName,
+            routerConfig: router,
+            theme: FlexThemeData.light(scheme: FlexScheme.brandBlue),
+            darkTheme: FlexThemeData.dark(scheme: FlexScheme.brandBlue),
+            themeMode: switch (themeNotifier.themeMode) {
+              AppThemeMode.light => ThemeMode.light,
+              AppThemeMode.dark => ThemeMode.dark,
+              AppThemeMode.system => ThemeMode.system,
+            },
+          );
         },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
       ),
     );
   }
