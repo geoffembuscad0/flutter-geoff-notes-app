@@ -1,4 +1,4 @@
-# flutter_geoff_notes_app
+# notes_app_supabase
 
 A new Flutter project.
 

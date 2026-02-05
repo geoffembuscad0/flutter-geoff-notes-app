@@ -1,6 +1,6 @@
 {
-    "name": "flutter_isar_notes_app",
-    "short_name": "flutter_isar_notes_app",
+    "name": "notes_app_supabase",
+    "short_name": "notes_app_supabase",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
