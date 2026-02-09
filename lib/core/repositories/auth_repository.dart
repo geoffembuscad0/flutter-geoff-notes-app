@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_starter_kit/app/utils/logger_utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app/routes/api_routes.dart';
 import '../../app/services/service_locator.dart';
@@ -17,7 +18,7 @@ class AuthRepository implements IAuthRepository {
         'email': email,
         'password': password,
       });
-      
+
       // Handle successful response
       if (response.statusCode == 200) {
         final token = response.data['token'] as String?;
@@ -56,7 +57,7 @@ class AuthRepository implements IAuthRepository {
         'email': email,
         'password': password,
       });
-      
+
       if (response.statusCode == 201) {
         final token = response.data['token'] as String?;
         if (token != null) {
@@ -92,7 +93,7 @@ class AuthRepository implements IAuthRepository {
   Future<void> refreshToken() async {
     try {
       final response = await _apiClient.post(ApiRoutes.refreshToken);
-      
+
       if (response.statusCode == 200) {
         final newToken = response.data['token'] as String?;
         if (newToken != null) {
@@ -137,7 +138,8 @@ class AuthRepositoryWithResult extends AuthRepository {
   }
 
   /// Register with result wrapper
-  Future<Result<String>> registerWithResult(String email, String password) async {
+  Future<Result<String>> registerWithResult(
+      String email, String password) async {
     try {
       await register(email, password);
       final token = await getToken();
