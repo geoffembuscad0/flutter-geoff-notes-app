@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_geoff_notes_app/pages/LoginPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,25 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const LoginPage(), //const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: StreamBuilder<AuthState>(
+        stream: Supabase.instance.client.auth.onAuthStateChange,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          final session = snapshot.data?.session;
+          debugPrint(session.toString());
+
+          if (session != null) {
+            return const MyHomePage(title: 'The Inner Citadel');
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
     );
   }
 }
@@ -127,8 +146,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-/**
- * Sample Login Credentials:
- * mayor.quezon_city@yahoo.com
- * joybelmonte1970
- */

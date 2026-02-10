@@ -109,3 +109,8 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 }
+/**
+ * Sample Login Credentials:
+ * mayor.quezon_city@yahoo.com
+ * joybelmonte1970
+ */
