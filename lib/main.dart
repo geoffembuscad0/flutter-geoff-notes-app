@@ -1,24 +1,14 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/app/const/app_constant.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_geoff_notes_app/pages/login_page.dart';
+import 'package:flutter_geoff_notes_app/pages/home_page.dart';
 
-import 'app/config/size_config.dart';
-import 'app/enum/enum.dart';
-import 'app/providers/app_providers.dart';
-import 'app/routes/app_routes.dart';
-import 'core/notifiers/theme/theme_notifiers.dart';
-import 'init.dart';
-
-void main() async {
-  await init();
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
     url: 'https://xrrpioappeetgnbsoaal.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhycnBpb2FwcGVldGduYnNvYWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzNzE2NTcsImV4cCI6MjA4Mzk0NzY1N30.EZBvbw23HBizBp4mspxzDyeIalHT3yS2m74jRyv_4Go',
+    anonKey: 'sb_publishable_vIQ2dQmTQXezcFXHHCc61g_GNNtB7w2',
   );
   runApp(const MyApp());
 }
@@ -26,25 +16,46 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return MultiProvider(
-      providers: AppProvider.providers,
-      child: Consumer<ThemeNotifier>(
-        builder: (context, themeNotifier, child) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: AppConstant.appName,
-            routerConfig: router,
-            theme: FlexThemeData.light(scheme: FlexScheme.brandBlue),
-            darkTheme: FlexThemeData.dark(scheme: FlexScheme.brandBlue),
-            themeMode: switch (themeNotifier.themeMode) {
-              AppThemeMode.light => ThemeMode.light,
-              AppThemeMode.dark => ThemeMode.dark,
-              AppThemeMode.system => ThemeMode.system,
-            },
-          );
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      // home: const LoginPage(), //const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: StreamBuilder<AuthState>(
+        stream: Supabase.instance.client.auth.onAuthStateChange,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          final session = snapshot.data?.session;
+          debugPrint(session.toString());
+
+          if (session != null) {
+            return const MyHomePage(title: 'The Inner Citadel');
+          } else {
+            return const LoginPage();
+          }
         },
       ),
     );
