@@ -7,8 +7,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://xrrpioappeetgnbsoaal.supabase.co',
-    anonKey: 'sb_publishable_vIQ2dQmTQXezcFXHHCc61g_GNNtB7w2',
+    url: 'https://lvhopnndygjficdiewej.supabase.co',
+    anonKey: 'sb_publishable_rzfPQZiJ_h-95FP1-zP9kA_HcX9p63-',
   );
   runApp(const MyApp());
 }
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Geoff Inner Citadel',
       theme: ThemeData(
         // This is the theme of your application.
         //
