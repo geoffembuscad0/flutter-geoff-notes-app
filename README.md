@@ -37,6 +37,67 @@ cd flutter_starter_kit
 flutter pub get
 ```
 
+## 🔑 Environment Setup
+
+This app reads its Supabase credentials at compile time using `--dart-define-from-file`, so you need to create an `env.json` file in the project root (next to `pubspec.yaml`).
+
+1. Copy the example file:
+
+```bash
+cp env.example.json env.json
+```
+
+2. Fill in your Supabase values:
+
+```json
+{
+  "SUPABASE_URL": "https://your-project-ref.supabase.co",
+  "SUPABASE_PUBLISHABLE_KEY": "your-publishable-anon-key"
+}
+```
+
+3. Run the app with the file:
+
+```bash
+flutter run --dart-define-from-file=env.json
+```
+
+The same flag is needed for builds:
+
+```bash
+flutter build apk --dart-define-from-file=env.json
+flutter build web --dart-define-from-file=env.json
+```
+
+### VS Code
+
+Add this to `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "geoff-notes-app",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define-from-file=env.json"]
+    }
+  ]
+}
+```
+
+### Android Studio
+
+Run > Edit Configurations > **Additional run args**:
+
+```
+--dart-define-from-file=env.json
+```
+
+> ⚠️ Without this flag the app throws `Bad state: Missing Supabase configuration`. Changes to `env.json` need a full restart; hot reload won't pick them up.
+
+
 ## 🏗 Projec Structure
 
 ```
